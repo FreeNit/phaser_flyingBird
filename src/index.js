@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 import PlayScene from './scenes/PlayScene';
+import MenuScene from './scenes/MenuScene';
+import PreloadScene from './scenes/PreloadScene';
+import ScoreScene from './scenes/ScoreScene';
 
 const WIDTH = 800;
 const HEIGHT = 600;
@@ -10,6 +13,10 @@ const SHARED_CONFIG = {
   height: HEIGHT,
   startPosition: BIRD_POSITION,
 };
+
+const Scenes = [PreloadScene, MenuScene, ScoreScene, PlayScene];
+const createScene = (Scene) => new Scene(SHARED_CONFIG);
+const initScenes = () => Scenes.map(createScene);
 
 const config = {
   // -> WebGL (Web Graphic Library) JS API for rendering 2D & 3D graphics
@@ -24,7 +31,7 @@ const config = {
     },
   },
   // -> what we are going to see
-  scene: [new PlayScene(SHARED_CONFIG)],
+  scene: initScenes(),
 };
 
 new Phaser.Game(config);

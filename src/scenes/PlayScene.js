@@ -1,12 +1,10 @@
-import Phaser from 'phaser';
+import BaseScene from './BaseScene';
 
 const PIPES_TO_RENDER = 5;
 
-class PlayScene extends Phaser.Scene {
+class PlayScene extends BaseScene {
   constructor(config) {
-    super('PlayScene');
-
-    this.config = config;
+    super('PlayScene', config);
 
     this.bird = null;
     this.pipes = null;
@@ -21,20 +19,18 @@ class PlayScene extends Phaser.Scene {
   }
 
   // -> Loading assets, such as images, music, animations ...
-  preload() {
-    // * 'this' context -> SCENE
-    // * contains functions and properties we can use
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('bird', 'assets/bird.png');
-    this.load.image('pipe', 'assets/pipe.png');
-  }
+  // preload() {
+  //   // * 'this' context -> SCENE
+  //   // * contains functions and properties we can use
+  // }
   // -> Initializing instances of the objects on the scene or in the memory (don`t need to display)
   create() {
-    this.createBG();
+    super.create();
     this.createBird();
     this.createPipes();
     this.createColliders();
     this.createScore();
+    this.createPause();
     this.handleInputs();
   }
 
@@ -90,6 +86,19 @@ class PlayScene extends Phaser.Scene {
     this.add.text(16, 52, `Best score: ${bestScore || 0}`, {
       fontSize: '18px',
       fill: '#000',
+    });
+  }
+
+  createPause() {
+    const pauseButton = this.add
+      .image(this.config.width - 10, this.config.height - 10, 'pause')
+      .setInteractive()
+      .setScale(3)
+      .setOrigin(1, 1);
+
+    pauseButton.on('pointerdown', () => {
+      this.physics.pause();
+      this.scene.pause();
     });
   }
 
