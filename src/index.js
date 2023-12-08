@@ -23,6 +23,7 @@ const config = {
   // -> WebGL (Web Graphic Library) JS API for rendering 2D & 3D graphics
   type: Phaser.AUTO,
   ...SHARED_CONFIG,
+  pixelArt: true,
   physics: {
     // -> Arcade physics plugin, manages physics simulation (how velocity, gravity... will be calculated)
     default: 'arcade',
